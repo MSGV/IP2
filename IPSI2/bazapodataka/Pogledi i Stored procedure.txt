@@ -1,0 +1,20 @@
+RESENJE - POGLEDI
+------------------------------------------
+CREATE VIEW `Fakultet_IP_SI2_2022`.`SviPodacioStudentima` AS select `STUDENT`.`BrojIndeksa`, `STUDENT`.`Prezime`, `STUDENT`.`Ime`, `SMER`.`Naziv` as `NazivSmera` from `Fakultet_IP_SI2_2022`.`STUDENT` INNER JOIN `Fakultet_IP_SI2_2022`.`SMER` ON `Fakultet_IP_SI2_2022`.`STUDENT`.`OznakaSmera`=`Fakultet_IP_SI2_2022`.`SMER`.`Oznaka`;
+
+
+CREATE VIEW `Fakultet_IP_SI2_2022`.`SviPodacioStudentimaSaSlikom` AS select `STUDENT`.`BrojIndeksa`, `STUDENT`.`Prezime`, `STUDENT`.`Ime`, `SMER`.`Naziv` as `NazivSmera`, `STUDENT`.`NazivFajlaFotografije`   from `Fakultet_IP_SI2_2022`.`STUDENT` INNER JOIN `Fakultet_IP_SI2_2022`.`SMER` ON `Fakultet_IP_SI2_2022`.`STUDENT`.`OznakaSmera`=`Fakultet_IP_SI2_2022`.`SMER`.`Oznaka`;
+
+
+RESENJE ZA STORED PROCEDURU- insert into
+-----------------------
+USE `Fakultet_IP_SI2_2022`;
+DROP procedure IF EXISTS `DodajStudenta`;
+DELIMITER $$
+USE `Fakultet_IP_SI2_2022`$$
+CREATE PROCEDURE `DodajStudenta` (IN BrojIndeksaParametar varchar(10), IN PrezimeParametar varchar(50), IN ImeParametar varchar(50), IN OznakaSmeraParametar char(2), IN NazivFajlaFotografijeParametar varchar(100))
+BEGIN
+INSERT INTO `STUDENT` (`BrojIndeksa`, `Prezime`, `Ime`, `OznakaSmera`, `NazivFajlaFotografije`) VALUES (BrojIndeksaParametar, PrezimeParametar, ImeParametar,OznakaSmeraParametar, NazivFajlaFotografijeParametar);
+END
+$$
+DELIMITER ;
