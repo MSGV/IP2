@@ -1,26 +1,5 @@
-<?php
-	   session_start();
-     	   
-	   $korisnik=$_SESSION["korisnik"];
-      
-			if (!isset($korisnik))
-				{
-					header ('Location:index.php');
-				}	
-
-	require "klase/BaznaKonekcija.php";
-	$KonekcijaObject = new Konekcija("klase/BaznaParametriKonekcije.xml");
-	$KonekcijaObject->connect();
-	$db_handle = $KonekcijaObject->konekcijaMYSQL;
-	$bazapodataka=$KonekcijaObject->KompletanNazivBazePodataka;
-	$UspehKonekcijeNaBazu=$KonekcijaObject->konekcijaDB;
-	
-	require "klase/BaznaTabela.php";
-	require "klase/DBSecondary.php";
-	$SecondaryObject = new DBSecondary($KonekcijaObject, "Secondary");
-	$SecondaryObject->UcitajKolekcijuSvihSmerova();
-	$KolekcijaZapisa= $SecondaryObject->Kolekcija;
-	$UkupanBrojZapisa= $SecondaryObject->BrojZapisa;
+﻿<?php
+session_start();
 
 ?>
 
@@ -28,10 +7,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <meta charset="UTF-8">
 <head>
-<title>ТФ М Пупин Зрењанин</title>
+<title>ТФ М Пупин</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
-<script src="JavaScript/provera.js"> </script>
 </head>
 <body>
 
@@ -69,7 +47,7 @@
 
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <!------- GLAVNI SADRZAJ desno ----------->  
-<?php include 'delovi/desnounosSP.php';?>
+<?php include 'delovi/desnoParametarskaStampa.php';?>
 </td>
 
 <td style="width:1%;">

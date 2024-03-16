@@ -1,35 +1,25 @@
 <?php
-// OVO JE SUSTINSKO ODJAVLJIVANJE KORISNIKA
 	   session_start();
-     	   
-	   // citanje vrednosti iz sesije
 	   $korisnik=$_SESSION["korisnik"];
       
-	  // ako nije prijavljen korisnik, vraca ga na pocetnu stranicu
-				if (!isset($korisnik))
+			if (!isset($korisnik))
 				{
 					header ('Location:index.php');
 				}	
 
-// REALIZACIJA CITANJA SVIH I FILTRIRANIH PODATAKA
-
-// KONEKTOVANJE NA BAZU
 	require "klase/BaznaKonekcija.php";
 	$KonekcijaObject = new Konekcija("klase/BaznaParametriKonekcije.xml");
 	$KonekcijaObject->connect();
 	$db_handle = $KonekcijaObject->konekcijaMYSQL;
 	$bazapodataka=$KonekcijaObject->KompletanNazivBazePodataka;
 	$UspehKonekcijeNaBazu=$KonekcijaObject->konekcijaDB;
-	
-	//echo "KONEKCIJA-BAZA:".$bazapodataka;
-	
-	// IZDVAJANJE PODATAKA KORISTECI KLASU SMER
+
 	require "klase/BaznaTabela.php";
-	require "klase/DBSmer.php";
-	$SmerObject = new DBSmer($KonekcijaObject, "smer");
-	$SmerObject->UcitajKolekcijuSvihSmerova();
-	$KolekcijaZapisa= $SmerObject->Kolekcija;
-	$UkupanBrojZapisa= $SmerObject->BrojZapisa;
+	require "klase/DBSecondary.php";
+	$SecondaryObject = new DBSecondary($KonekcijaObject, "Secondary");
+	$SecondaryObject->UcitajKolekcijuSvihSmerova();
+	$KolekcijaZapisa= $SecondaryObject->Kolekcija;
+	$UkupanBrojZapisa= $SecondaryObject->BrojZapisa;
 
 ?>
 

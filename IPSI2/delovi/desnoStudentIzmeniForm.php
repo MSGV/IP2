@@ -52,7 +52,7 @@
 
 <!------------------------FORMA ZA UNOS ---- ACTION="studentsnimi.php" --->
 <table style="width:50%;" bgcolor="#D8E7F4" padding:0" align="center" cellspacing="0" cellpadding="0" border="0">
-<form name="FormaZaUnosStudenta" action="studentIzmeni.php" METHOD="POST" enctype="multipart/form-data" >
+<form name="FormaZaUnosStudenta" action="masterIzmeni.php" METHOD="POST" enctype="multipart/form-data" >
 
 <tr>
 <td align="right" valign="bottom">     
@@ -122,8 +122,8 @@
 	{					
 		for ($brojacSmerova = 0; $brojacSmerova < $UkupanBrojZapisa; $brojacSmerova++) 
 			{
-				$oznakaSmera =$SmerObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 0);				
-				$nazivSmera=$SmerObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 1);				
+				$oznakaSmera =$SecondaryObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 0);				
+				$nazivSmera=$SecondaryObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 1);				
 				echo "<option value=\"$oznakaSmera\">$nazivSmera</option>";						
 			} //for
 										

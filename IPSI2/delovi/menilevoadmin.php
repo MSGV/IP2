@@ -110,7 +110,7 @@
 <td style="width:1px;">
 </td>
 <td style="align:center">
- <a href="StudentiLista.php" ><font face="Trebuchet MS" color="black" size="2px">&nbsp;&nbsp;&nbsp;&nbsp;Листа и ажурирање</font></a>
+ <a href="MasterLista.php" ><font face="Trebuchet MS" color="black" size="2px">&nbsp;&nbsp;&nbsp;&nbsp;Листа и ажурирање</font></a>
 </td>
 <td>
 </td>

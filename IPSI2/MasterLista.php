@@ -3,24 +3,46 @@
      	   
 	   $korisnik=$_SESSION["korisnik"];
       
-			if (!isset($korisnik))
+				if (!isset($korisnik))
 				{
 					header ('Location:index.php');
 				}	
 
 	require "klase/BaznaKonekcija.php";
-	$KonekcijaObject = new Konekcija("klase/BaznaParametriKonekcije.xml");
-	$KonekcijaObject->connect();
-	$db_handle = $KonekcijaObject->konekcijaMYSQL;
-	$bazapodataka=$KonekcijaObject->KompletanNazivBazePodataka;
-	$UspehKonekcijeNaBazu=$KonekcijaObject->konekcijaDB;
-	
 	require "klase/BaznaTabela.php";
-	require "klase/DBSecondary.php";
-	$SecondaryObject = new DBSecondary($KonekcijaObject, "Secondary");
-	$SecondaryObject->UcitajKolekcijuSvihSmerova();
-	$KolekcijaZapisa= $SecondaryObject->Kolekcija;
-	$UkupanBrojZapisa= $SecondaryObject->BrojZapisa;
+	$KonekcijaObject = new Konekcija('klase/BaznaParametriKonekcije.xml');
+	$KonekcijaObject->connect();
+
+	if ($KonekcijaObject->konekcijaDB)
+    {	
+		//echo "Успешна конекција!";
+		require "klase/DBMasterV.php";
+		$StudentViewObject = new DBMaster($KonekcijaObject,"master");
+		if (isset($_GET['filtriraj']))
+			{
+				// prikaz filtriranih podataka primenom pogleda nad kojim je dodat filter
+				$filter=$_GET['filter'];
+				$StudentViewObject->DajSvePodatkeOMaster($filter);
+
+			}
+			else
+			{
+				// prikaz svih podataka primenom pogleda koji je u bazi podataka
+				$filter=null;
+				$StudentViewObject->DajSvePodatkeOMaster($filter);
+				// sada raspolazemo sa:
+				//$StudentViewObject->Kolekcija 
+				//$StudentViewObject->BrojZapisa
+			}
+
+
+
+
+    }
+	else
+	{
+		echo "Неуспешна конекција!";
+	}
 
 ?>
 
@@ -31,7 +53,6 @@
 <title>ТФ М Пупин Зрењанин</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
-<script src="JavaScript/provera.js"> </script>
 </head>
 <body>
 
@@ -69,7 +90,7 @@
 
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <!------- GLAVNI SADRZAJ desno ----------->  
-<?php include 'delovi/desnounosSP.php';?>
+<?php include 'delovi/desnoStudentiLista.php';?>
 </td>
 
 <td style="width:1%;">

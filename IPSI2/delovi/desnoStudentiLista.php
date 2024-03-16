@@ -92,13 +92,13 @@ else
 		echo "<b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$NazivSmera</font><br/>";
 		echo "</td>";
 		echo "<td>";
-		echo "<form ACTION=\"StudentIzmeniForm.php\" METHOD=\"POST\">";
+		echo "<form ACTION=\"MasterIzmeniForm.php\" METHOD=\"POST\">";
 		echo "<input type=\"hidden\" name=\"BrojIndeksa\" value=\"$BrojIndeksa\">";
 		echo "<b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\"><input TYPE=\"submit\" name=\"izmeniStudenta\" value=\"IZMENI\" /></font></b>";
 		echo "</form>";
 		echo "</td>";
 		echo "<td>";
-		echo "<form ACTION=\"StudentObrisi.php\" METHOD=\"POST\">";
+		echo "<form ACTION=\"MasterObrisi.php\" METHOD=\"POST\">";
 		echo "<input type=\"hidden\" name=\"BrojIndeksa\" value=\"$BrojIndeksa\">";
 		echo "<b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\"><input TYPE=\"submit\" name=\"obrisiStudenta\" value=\"OBRISI\"  onclick=\"return confirm('Da li ste sigurni da zelite da obrisete zapis?')\"/></font></b>";
 		echo "</form>";

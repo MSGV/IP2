@@ -1,11 +1,8 @@
 <?php
-	   session_start();
-     	   
-	   // citanje vrednosti iz sesije
+	   session_start();   
 	   $korisnik=$_SESSION["korisnik"];
       
-	  // ako nije prijavljen korisnik, vraca ga na pocetnu stranicu
-				if (!isset($korisnik))
+			if (!isset($korisnik))
 				{
 					header ('Location:index.php');
 				}	

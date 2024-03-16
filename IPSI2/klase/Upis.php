@@ -19,7 +19,7 @@ $xml=simplexml_load_file("klase/".$OznakaSmeraParametar.".xml") or die("Nije usp
 $maxBrojStudenata=$xml->MaxBrStudenata;
 
 // izdvajanje koliko trenutno imamo upisanih za taj smer u bazi podataka
-$NazivTrazenogPolja="count(`BrojIndeksa`)";
+$NazivTrazenogPolja="count(`ID`)";
 $KriterijumFiltriranja="`OznakaSmera`='".$OznakaSmeraParametar."'";
 $KriterijumSortiranja="`BrojIndeksa`"; // nema potrebe da se sortira, ali ne menjamo baznu klasu
 $trenutanBrojStudenata=$this->DajVrednostJednogPoljaPrvogZapisa($NazivTrazenogPolja, $KriterijumFiltriranja, $KriterijumSortiranja); 

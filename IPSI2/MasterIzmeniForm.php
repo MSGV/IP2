@@ -1,12 +1,15 @@
 <?php
+
 	   session_start();
-     	   
 	   $korisnik=$_SESSION["korisnik"];
       
+	
 			if (!isset($korisnik))
 				{
 					header ('Location:index.php');
 				}	
+
+	$StariIDZaIzmenu=$_POST['ID']; //ID Mastera
 
 	require "klase/BaznaKonekcija.php";
 	$KonekcijaObject = new Konekcija("klase/BaznaParametriKonekcije.xml");
@@ -17,10 +20,27 @@
 	
 	require "klase/BaznaTabela.php";
 	require "klase/DBSecondary.php";
-	$SecondaryObject = new DBSecondary($KonekcijaObject, "Secondary");
+	$SecondaryObject = new DBSecondary($KonekcijaObject, "Sondary");
 	$SecondaryObject->UcitajKolekcijuSvihSmerova();
 	$KolekcijaZapisa= $SecondaryObject->Kolekcija;
 	$UkupanBrojZapisa= $SecondaryObject->BrojZapisa;
+
+
+	require "klase/DBMaster.php";
+	$MasterObject = new DBMaster($KonekcijaObject, 'master');
+	$MasterObject->UcitajStudentaPoBrojuIndeksa($StariIDZaIzmenu);
+	$KolekcijaZapisaMaster= $MasterObject->Kolekcija;
+	$UkupanBrojZapisaStudenata = $MasterObject->BrojZapisa;
+	
+	if ($UkupanBrojZapisaStudenata>0) 
+		{
+			$row=0;
+			$StariBrojIndeksa=$MasterObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisaMaster, $row, 0);//mysql_result($result,$row,"REGISTARSKIBROJ");
+			$StaroPrezime=$MasterObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisaMaster, $row, 1);
+			$StaroIme=$MasterObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisaMaster, $row, 2);
+			$StaraOznakaSmera=$MasterObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisaMaster, $row, 3);
+			$StariNazivFajlaFotografije=$MasterObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisaMaster, $row, 4);
+		}         
 
 ?>
 
@@ -69,7 +89,7 @@
 
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <!------- GLAVNI SADRZAJ desno ----------->  
-<?php include 'delovi/desnounosSP.php';?>
+<?php include 'delovi/desnoStudentIzmeniForm.php';?>
 </td>
 
 <td style="width:1%;">

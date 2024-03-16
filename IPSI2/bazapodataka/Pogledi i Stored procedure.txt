@@ -1,20 +1,18 @@
 RESENJE - POGLEDI
 ------------------------------------------
-CREATE VIEW `Fakultet_IP_SI2_2022`.`SviPodacioStudentima` AS select `STUDENT`.`BrojIndeksa`, `STUDENT`.`Prezime`, `STUDENT`.`Ime`, `SMER`.`Naziv` as `NazivSmera` from `Fakultet_IP_SI2_2022`.`STUDENT` INNER JOIN `Fakultet_IP_SI2_2022`.`SMER` ON `Fakultet_IP_SI2_2022`.`STUDENT`.`OznakaSmera`=`Fakultet_IP_SI2_2022`.`SMER`.`Oznaka`;
 
-
-CREATE VIEW `Fakultet_IP_SI2_2022`.`SviPodacioStudentimaSaSlikom` AS select `STUDENT`.`BrojIndeksa`, `STUDENT`.`Prezime`, `STUDENT`.`Ime`, `SMER`.`Naziv` as `NazivSmera`, `STUDENT`.`NazivFajlaFotografije`   from `Fakultet_IP_SI2_2022`.`STUDENT` INNER JOIN `Fakultet_IP_SI2_2022`.`SMER` ON `Fakultet_IP_SI2_2022`.`STUDENT`.`OznakaSmera`=`Fakultet_IP_SI2_2022`.`SMER`.`Oznaka`;
+CREATE VIEW `Bazaa`.`SviPodaciMaster` AS select `Master`.`ID`, `Master`.`Atribute1`, `Master`.`Atribute2`, `Secondary`.`S_Atribute1` as `NazivSecondarya`, `Master`.`Atribute3`   from `Bazaa`.`Master` INNER JOIN `Bazaa`.`Secondary` ON `Bazaa`.`Master`.`ID_F`=`Bazaa`.`Secondary`.`ID`;
 
 
 RESENJE ZA STORED PROCEDURU- insert into
 -----------------------
-USE `Fakultet_IP_SI2_2022`;
-DROP procedure IF EXISTS `DodajStudenta`;
+USE `Bazaa`;
+DROP procedure IF EXISTS `DodajMastera`;
 DELIMITER $$
-USE `Fakultet_IP_SI2_2022`$$
-CREATE PROCEDURE `DodajStudenta` (IN BrojIndeksaParametar varchar(10), IN PrezimeParametar varchar(50), IN ImeParametar varchar(50), IN OznakaSmeraParametar char(2), IN NazivFajlaFotografijeParametar varchar(100))
+USE `Bazaa`$$
+CREATE PROCEDURE `DodajMastera` (IN IDParametar int, IN Atribute1Parametar varchar(50), IN Atribute2Parametar varchar(50), IN IDSecondaryaParametar int, IN Atribute3 varchar(100))
 BEGIN
-INSERT INTO `STUDENT` (`BrojIndeksa`, `Prezime`, `Ime`, `OznakaSmera`, `NazivFajlaFotografije`) VALUES (BrojIndeksaParametar, PrezimeParametar, ImeParametar,OznakaSmeraParametar, NazivFajlaFotografijeParametar);
+INSERT INTO `Master` (`ID`, `Atribute1`, `Atribute2`, `Atribute3`, `ID_F`) VALUES (IDParametar, Atribute1Parametar, Atribute2Parametar,Atribute3, IDSecondaryaParametar);
 END
 $$
 DELIMITER ;

@@ -120,8 +120,8 @@
 	{					
 		for ($brojacSmerova = 0; $brojacSmerova < $UkupanBrojZapisa; $brojacSmerova++) 
 			{
-				$oznakaSmera =$SmerObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 0);				
-				$nazivSmera=$SmerObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 1);				
+				$oznakaSmera =$SecondaryObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 0);				
+				$nazivSmera=$SecondaryObject->DajVrednostPoRednomBrojuZapisaPoRBPolja ($KolekcijaZapisa, $brojacSmerova, 1);				
 				echo "<option value=\"$oznakaSmera\">$nazivSmera</option>";						
 			} //for
 										

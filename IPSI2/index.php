@@ -1,45 +1,30 @@
 <?php
-// OVO JE SUSTINSKO ODJAVLJIVANJE KORISNIKA
+
 session_start();
-// remove all session variables
 session_unset(); 
-// destroy the session 
 session_destroy(); 
 
-// REALIZACIJA CITANJA SVIH I FILTRIRANIH PODATAKA
-
-//KONEKCIJA KA SERVERU
-	
-// koristimo klasu za poziv procedure za konekciju
 	require "klase/BaznaKonekcija.php";
 	require "klase/BaznaTabela.php";
 	$KonekcijaObject = new Konekcija('klase/BaznaParametriKonekcije.xml');
 	$KonekcijaObject->connect();
-	if ($KonekcijaObject->konekcijaDB) // uspesno realizovana konekcija ka DBMS i bazi podataka
+	if ($KonekcijaObject->konekcijaDB) 
     {	
-		//echo "Успешна конекција!";
-		require "klase/DBStudentV.php";
-		$StudentViewObject = new DBStudent($KonekcijaObject,"student");
+		require "klase/DBMasterV.php";
+		$StudentViewObject = new DBMaster($KonekcijaObject,"master");
 		if (isset($_GET['filtriraj']))
 			{
-				// prikaz filtriranih podataka primenom pogleda nad kojim je dodat filter
+				
 				$filter=$_GET['filter'];
-				$StudentViewObject->DajSvePodatkeOStudentima($filter);
+				$StudentViewObject->DajSvePodatkeOMaster($filter);
 
 			}
 			else
 			{
-				// prikaz svih podataka primenom pogleda koji je u bazi podataka
 				$filter=null;
-				$StudentViewObject->DajSvePodatkeOStudentima($filter);
-				// sada raspolazemo sa:
-				//$StudentViewObject->Kolekcija 
-				//$StudentViewObject->BrojZapisa
+				$StudentViewObject->DajSvePodatkeOMaster($filter);
+
 			}
-
-
-
-
     }
 	else
 	{

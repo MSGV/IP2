@@ -1,26 +1,34 @@
-<?php
-	   session_start();
-     	   
-	   $korisnik=$_SESSION["korisnik"];
-      
-			if (!isset($korisnik))
-				{
-					header ('Location:index.php');
-				}	
+﻿<?php
+	session_start();
+	session_unset(); 
+	session_destroy(); 
 
 	require "klase/BaznaKonekcija.php";
-	$KonekcijaObject = new Konekcija("klase/BaznaParametriKonekcije.xml");
-	$KonekcijaObject->connect();
-	$db_handle = $KonekcijaObject->konekcijaMYSQL;
-	$bazapodataka=$KonekcijaObject->KompletanNazivBazePodataka;
-	$UspehKonekcijeNaBazu=$KonekcijaObject->konekcijaDB;
-	
 	require "klase/BaznaTabela.php";
-	require "klase/DBSecondary.php";
-	$SecondaryObject = new DBSecondary($KonekcijaObject, "Secondary");
-	$SecondaryObject->UcitajKolekcijuSvihSmerova();
-	$KolekcijaZapisa= $SecondaryObject->Kolekcija;
-	$UkupanBrojZapisa= $SecondaryObject->BrojZapisa;
+	$KonekcijaObject = new Konekcija('klase/BaznaParametriKonekcije.xml');
+	$KonekcijaObject->connect();
+
+		if ($KonekcijaObject->konekcijaDB) // uspesno realizovana konekcija ka DBMS i bazi podataka
+			{	
+				require "klase/DBMasterV.php";
+				$StudentViewObject = new DBMaster($KonekcijaObject,"master");
+
+				if (isset($_GET['filtriraj']))
+					{
+						$filter=$_GET['filter'];
+						$StudentViewObject->DajSvePodatkeOMaster($filter);
+
+					}
+					else
+					{
+						$filter=null;
+						$StudentViewObject->DajSvePodatkeOMaster($filter);
+					}
+			}
+		else
+			{
+				echo "Неуспешна конекција!";
+			}
 
 ?>
 
@@ -28,10 +36,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <meta charset="UTF-8">
 <head>
-<title>ТФ М Пупин Зрењанин</title>
+<title>ТФ М Пупин</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
-<script src="JavaScript/provera.js"> </script>
 </head>
 <body>
 
@@ -40,7 +47,7 @@
 <table class="no-spacing" style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0;">
 
 <!-------------------------- ZAGLAVLJE ------->
-<?php include 'delovi/zaglavljewelcome.php';?>
+<?php include 'delovi/zaglavljestampa.php';?>
 
 
 <!-------------------------- DONJI DEO  ------->
@@ -54,22 +61,15 @@
 <!---------------------- SREDINA DONJEG DELA SA SADRZAJEM pocinje ovde ---------------------->
 <td align="center" valign="middle" style="width:80%; padding:0" > 
 
-<table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#003366">
+<table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF">
 
 <tr>
 <td style="width:1%;">
 </td>
 
-<td style="width:15%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
-<?php include 'delovi/menilevoadmin.php';?>
-</td>
-
-<td style="width:1%;">
-</td>
-
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <!------- GLAVNI SADRZAJ desno ----------->  
-<?php include 'delovi/desnounosSP.php';?>
+<?php include 'delovi/desnostampa.php';?>
 </td>
 
 <td style="width:1%;">
@@ -96,7 +96,7 @@
 </tr>
 <!--- DONJI DEO sa donjom ivicom zavrsava ovde  ------->
 <!-- footer panel starts here -->
-<?php include 'delovi/footer.php';?>
+<?php include 'delovi/footerstampa.php';?>
 
 </table>
 

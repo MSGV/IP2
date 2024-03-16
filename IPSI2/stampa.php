@@ -1,46 +1,39 @@
 ﻿<?php
-// OVO JE SUSTINSKO ODJAVLJIVANJE KORISNIKA
-session_start();
-// remove all session variables
-session_unset(); 
-// destroy the session 
-session_destroy(); 
 
-// REALIZACIJA CITANJA SVIH I FILTRIRANIH PODATAKA
+	session_start();
+	session_unset(); 
+	session_destroy(); 
 
-//KONEKCIJA KA SERVERU
-	
-// koristimo klasu za poziv procedure za konekciju
-	require "delovi/klase/Konekcija.php";
-	$objKonekcija = new Konekcija();
-	$objKonekcija->KonektujSe();
-	$db_handle = $objKonekcija->UspehKonekcijeNaMYSQL;
-	$bazapodataka=$objKonekcija->bazapodataka;
-    $UspehKonekcijeNaBazu=$objKonekcija->UspehKonekcijeNaBazuPodataka;
-	
-// NASTAVAK
-       if ($UspehKonekcijeNaBazu)
-           {
-            // dodatak da moze da radi sa UTF8
-	    mysql_query('SET NAMES "utf8"',$db_handle);
-	    
-		if (isset($_POST["filtriraj"]))
+		require "delovi/klase/Konekcija.php";
+		$objKonekcija = new Konekcija();
+		$objKonekcija->KonektujSe();
+		$db_handle = $objKonekcija->UspehKonekcijeNaMYSQL;
+		$bazapodataka=$objKonekcija->bazapodataka;
+		$UspehKonekcijeNaBazu=$objKonekcija->UspehKonekcijeNaBazuPodataka;
+		
+		if ($UspehKonekcijeNaBazu)
 			{
-			// filtrirano
-			$FilterVrednost=$_POST["filter"];
-            $SQL = "select * from `".$bazapodataka."`.`VOZILO` WHERE NAZIVPROIZVODJACA like '%".$FilterVrednost."%' ORDER BY BROJPREDJENIHKILOMETARA DESC";
-			}
+
+			mysql_query('SET NAMES "utf8"',$db_handle);
+			
+			if (isset($_POST["filtriraj"]))
+				{
+				// filtrirano
+				$FilterVrednost=$_POST["filter"];
+				$SQL = "select * from `".$bazapodataka."`.`VOZILO` WHERE NAZIVPROIZVODJACA like '%".$FilterVrednost."%' ORDER BY BROJPREDJENIHKILOMETARA DESC";
+				}
+				
 			else
-			{
-			// prikaz svih - PRVO UCITAVANJE INDEX.PHP, dugme "SVI"
-			$SQL = "select * from `".$bazapodataka."`.`VOZILO` ORDER BY BROJPREDJENIHKILOMETARA DESC";
-			}
-        
+				{
+				// prikaz svih - PRVO UCITAVANJE INDEX.PHP, dugme "SVI"
+				$SQL = "select * from `".$bazapodataka."`.`VOZILO` ORDER BY BROJPREDJENIHKILOMETARA DESC";
+				}
+			
 
-			$result = mysql_query($SQL);
-            $num_rows = mysql_num_rows($result);
+				$result = mysql_query($SQL);
+				$num_rows = mysql_num_rows($result);
 
-            }
+				}
 
 ?>
 

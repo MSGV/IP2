@@ -1,27 +1,27 @@
-﻿CREATE DATABASE `Fakultet_IP_SI2_2022` CHARACTER SET utf8 COLLATE utf8_general_ci;
+﻿CREATE DATABASE `Bazaa` CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-create table `Fakultet_IP_SI2_2022`.`STUDENT`
+create table `Bazaa`.`Master`
 (
-   BrojIndeksa varchar(10) NOT NULL PRIMARY KEY,
-   Prezime varchar(50) not null,
-   Ime varchar(50) not null,
-   OznakaSmera    char(2) not null,
-   NazivFajlaFotografije varchar(100) null
+   ID INT NOT NULL PRIMARY KEY,
+   Atribute1 varchar(50) not null,
+   Atribute2 varchar(50) not null,
+   Atribute3    char(2) not null,
+   ID_F INT null
 );
 
 
-create table `Fakultet_IP_SI2_2022`.`SMER`
+create table `Bazaa`.`Secondary`
 (
-   Oznaka char(2) NOT NULL PRIMARY KEY,
-   Naziv  varchar(50) not null,
-   UkupanBrojStudenata int not null
+   ID INT NOT NULL PRIMARY KEY,
+   S_Atribute1  varchar(50) not null,
+   S_Atribute2 int not null
 );
 
 
-alter table `Fakultet_IP_SI2_2022`.`STUDENT` add constraint FK_PRIPADA foreign key (OznakaSmera) references `Fakultet_IP_SI2_2022`.`SMER`(Oznaka) on delete restrict on update cascade;
+alter table `Bazaa`.`Master` add constraint FK_PRIPADA foreign key (ID_F) references `Bazaa`.`Secondary`(ID) on delete restrict on update cascade;
 
 
-create table `Fakultet_IP_SI2_2022`.`KORISNIK`
+create table `Bazaa`.`KORISNIK`
 (
    IDKORISNIKA          int NOT NULL AUTO_INCREMENT PRIMARY KEY,
    PREZIME              varchar(50) not null,
@@ -35,11 +35,11 @@ create table `Fakultet_IP_SI2_2022`.`KORISNIK`
 
 
 
-INSERT INTO `Fakultet_IP_SI2_2022`.`KORISNIK` (PREZIME, IME, EMAIL, KORISNICKOIME, SIFRA, URLSLIKE, STATUSUCESCA) VALUES ('Кази','Љубица', 'ljubicakazi@hotmail.com', 'lkazi', 'lk', 'Ljubica.jpg', 'admin');
+INSERT INTO `Bazaa`.`KORISNIK` (PREZIME, IME, EMAIL, KORISNICKOIME, SIFRA, URLSLIKE, STATUSUCESCA) VALUES ('Кази','Љубица', 'ljubicakazi@hotmail.com', 'lkazi', 'lk', 'Ljubica.jpg', 'admin');
 
 
 
-INSERT INTO `Fakultet_IP_SI2_2022`.`SMER` (Oznaka, Naziv, UkupanBrojStudenata) VALUES ('SI', 'Софтверско инжењерство',0);
-INSERT INTO `Fakultet_IP_SI2_2022`.`SMER` (Oznaka, Naziv, UkupanBrojStudenata) VALUES ('IT', 'Информационе технологије',0);
+INSERT INTO `Bazaa`.`Secondary` (Oznaka, Naziv, UkupanBrojStudenata) VALUES ('SI', 'Софтверско инжењерство',0);
+INSERT INTO `Bazaa`.`Secondary` (Oznaka, Naziv, UkupanBrojStudenata) VALUES ('IT', 'Информационе технологије',0);
 
 
